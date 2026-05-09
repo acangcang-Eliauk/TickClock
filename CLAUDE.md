@@ -5,14 +5,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 - `npm start` — Launch the Electron app
-- `npm run build` — Build Windows portable executable via electron-builder
 
 ## Architecture
 
 Electron desktop widget — transparent frameless window with CSS flip-clock animation.
 
 ### Main process (`main.js`)
-Creates a 560x420 frameless transparent always-on-top window. Registers `Ctrl+Shift+F12` global shortcut to toggle always-on-top. IPC handlers: `set-always-on-top`, `set-opacity`, `window-close`, `get-ontop`. Communication with renderer is via `contextBridge` (`preload.js` → `window.tickAPI`).
+Creates a 560x420 frameless transparent always-on-top window. Registers `Ctrl+Shift+F12` global shortcut to toggle always-on-top. System tray with right-click menu (show/hide, settings, always-on-top, auto-start, quit). Window position saved to `userData/window-state.json` on move/resize and restored on launch. Auto-start via `app.setLoginItemSettings()`.
+
+IPC handlers: `set-always-on-top`, `set-opacity`, `window-close`, `set-autostart`, `get-autostart` (invoke), `get-ontop` (invoke). Communication with renderer is via `contextBridge` (`preload.js` → `window.tickAPI`).
 
 ### Renderer — key modules loaded in order in `index.html`:
 
@@ -22,7 +23,7 @@ Creates a 560x420 frameless transparent always-on-top window. Registers `Ctrl+Sh
 
 - **`drag.js`** — No custom drag handlers. Uses native Electron `-webkit-app-region: drag` on `#clock-container`. Toggle `.locked` class to switch between `drag`/`no-drag`. Exposes `window.tickDrag = { setLocked, isLocked }`.
 
-- **`settings.js`** — Settings panel with overlay. All settings persist to localStorage (`tickclock_*` keys). Toggle seconds visibility hides/shows CSS elements directly. Theme system applies `theme-{name}` class to `<body>`. Subscribes to `tickAPI.onOntopChanged` for global shortcut sync.
+- **`settings.js`** — Settings panel with overlay. All settings persist to localStorage (`tickclock_*` keys). Toggle seconds visibility hides/shows CSS elements directly. Theme system applies `theme-{name}` class to `<body>`. Subscribes to `tickAPI.onOntopChanged` and `tickAPI.onAutoStartChanged` for tray sync. Listens for `tickAPI.onShowSettings` to open panel from tray menu.
 
 ### CSS flip animation
 - `.flip-card { perspective: 120px; transform-style: preserve-3d; }`
@@ -36,3 +37,7 @@ Creates a 560x420 frameless transparent always-on-top window. Registers `Ctrl+Sh
 - `setAlwaysOnTop(true, 'desktop')` is macOS-only, silently ignored on Windows
 - `skipTaskbar: true` + `setAlwaysOnTop(false)` makes window unrecoverable without global shortcut rescue
 - `perspective` < 200px needed for visible 3D foreshortening at such small card size
+- Window close hides to tray instead of quitting; tray menu "退出" commits actual quit
+
+### Screenshots
+- `npx electron screenshot.js` — Generate screenshots for README (8 PNGs in `screenshots/`)

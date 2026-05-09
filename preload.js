@@ -10,4 +10,16 @@ contextBridge.exposeInMainWorld('tickAPI', {
     ipcRenderer.on('ontop-changed', listener);
     return () => ipcRenderer.removeListener('ontop-changed', listener);
   },
+  setAutoStart: (val) => ipcRenderer.send('set-autostart', val),
+  getAutoStart: () => ipcRenderer.invoke('get-autostart'),
+  onAutoStartChanged: (callback) => {
+    const listener = (_, val) => callback(val);
+    ipcRenderer.on('autostart-changed', listener);
+    return () => ipcRenderer.removeListener('autostart-changed', listener);
+  },
+  onShowSettings: (callback) => {
+    const listener = () => callback();
+    ipcRenderer.on('show-settings', listener);
+    return () => ipcRenderer.removeListener('show-settings', listener);
+  },
 });
