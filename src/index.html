@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TickClock</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="widget">
+  <div id="clock-container">
+    <div class="flip-clock">
+      <div class="flip-group" id="group-hours-tens">
+        <div class="flip-card" data-value="0">
+          <div class="top"><span class="text">0</span></div>
+          <div class="bottom"><span class="text">0</span></div>
+          <div class="flip-top"><span class="text">0</span></div>
+          <div class="flip-bottom"><span class="text">0</span></div>
+        </div>
+      </div>
+      <div class="flip-group" id="group-hours-ones">
+        <div class="flip-card" data-value="0">
+          <div class="top"><span class="text">0</span></div>
+          <div class="bottom"><span class="text">0</span></div>
+          <div class="flip-top"><span class="text">0</span></div>
+          <div class="flip-bottom"><span class="text">0</span></div>
+        </div>
+      </div>
+      <div class="separator"><span>:</span></div>
+      <div class="flip-group" id="group-minutes-tens">
+        <div class="flip-card" data-value="0">
+          <div class="top"><span class="text">0</span></div>
+          <div class="bottom"><span class="text">0</span></div>
+          <div class="flip-top"><span class="text">0</span></div>
+          <div class="flip-bottom"><span class="text">0</span></div>
+        </div>
+      </div>
+      <div class="flip-group" id="group-minutes-ones">
+        <div class="flip-card" data-value="0">
+          <div class="top"><span class="text">0</span></div>
+          <div class="bottom"><span class="text">0</span></div>
+          <div class="flip-top"><span class="text">0</span></div>
+          <div class="flip-bottom"><span class="text">0</span></div>
+        </div>
+      </div>
+      <div class="separator dot"><span>:</span></div>
+      <div class="flip-group" id="group-seconds-tens">
+        <div class="flip-card" data-value="0">
+          <div class="top"><span class="text">0</span></div>
+          <div class="bottom"><span class="text">0</span></div>
+          <div class="flip-top"><span class="text">0</span></div>
+          <div class="flip-bottom"><span class="text">0</span></div>
+        </div>
+      </div>
+      <div class="flip-group" id="group-seconds-ones">
+        <div class="flip-card" data-value="0">
+          <div class="top"><span class="text">0</span></div>
+          <div class="bottom"><span class="text">0</span></div>
+          <div class="flip-top"><span class="text">0</span></div>
+          <div class="flip-bottom"><span class="text">0</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="bottom-bar">
+    <div id="date-display"></div>
+    <div id="action-buttons">
+      <button id="btn-lock" title="锁定/解锁">&#x1F512;</button>
+      <button id="btn-settings" title="设置">&#x2699;</button>
+      <button id="btn-close-widget" title="关闭">&#x2715;</button>
+    </div>
+  </div>
+</div>
+
+<div id="settings-panel">
+  <div class="settings-header">
+    <span>设置</span>
+    <button id="btn-close-settings">&times;</button>
+  </div>
+  <div class="settings-body">
+    <div class="setting-row">
+      <div class="setting-label">总在最前</div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="setting-ontop" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">锁定位置</div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="setting-locked">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">显示秒数</div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="setting-seconds" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">24小时制</div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="setting-24h" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">透明度</div>
+      <input type="range" id="setting-opacity" min="30" max="100" value="100">
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">主题色</div>
+      <div class="theme-picker">
+        <button class="theme-dot" data-theme="dark" style="background:#1a1a2e"></button>
+        <button class="theme-dot" data-theme="blue" style="background:#0d47a1"></button>
+        <button class="theme-dot" data-theme="red" style="background:#b71c1c"></button>
+        <button class="theme-dot" data-theme="green" style="background:#1b5e20"></button>
+        <button class="theme-dot" data-theme="purple" style="background:#4a148c"></button>
+        <button class="theme-dot" data-theme="wood" style="background:#5d4037"></button>
+      </div>
+    </div>
+  </div>
+  <div class="settings-footer">
+    <span class="version">TickClock v1.0 &nbsp;|&nbsp; Ctrl+Shift+F12 唤出</span>
+  </div>
+</div>
+
+<div id="settings-overlay"></div>
+
+<script src="js/flip.js"></script>
+<script src="js/clock.js"></script>
+<script src="js/drag.js"></script>
+<script src="js/settings.js"></script>
+</body>
+</html>
